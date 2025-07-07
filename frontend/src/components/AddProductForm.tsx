@@ -11,14 +11,11 @@ const AddProductForm = ({ onProductAdded }: { onProductAdded: () => void }) => {
     const newProduct = { name, quantity, location };
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newProduct),
-        }
-      );
+      const res = await fetch("http://localhost:5000/api/products", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newProduct),
+      });
 
       if (res.ok) {
         setName("");

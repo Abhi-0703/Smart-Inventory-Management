@@ -17,7 +17,7 @@ const fetcher = async (url: string): Promise<Product[]> => {
 
 export default function ProductList() {
   const { data: products = [], mutate, error } = useSWR<Product[]>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`,
+    'http://localhost:5000/api/products',
     fetcher
   );
 
@@ -57,7 +57,7 @@ export default function ProductList() {
     }
 
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/transfers`, {
+      await axios.post('http://localhost:5000/api/transfers', {
         productId: product._id,
         from: product.location,
         to,
@@ -83,7 +83,7 @@ export default function ProductList() {
     }
 
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`, {
+      await axios.post('http://localhost:5000/api/products', {
         name: name.trim(),
         quantity: Number(quantity),
         location,
@@ -116,12 +116,14 @@ export default function ProductList() {
     return matchesName && matchesStore;
   });
 
+  // Unique product names for datalist
   const uniqueProductNames = [...new Set(products.map((p) => p.name))].sort();
 
   return (
     <div className="text-white">
       <h1 className="text-2xl font-bold mb-4">📋 Inventory Dashboard</h1>
 
+      {/* ✅ Notification */}
       {notification && (
         <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50">
           <div
@@ -134,8 +136,10 @@ export default function ProductList() {
         </div>
       )}
 
+      {/* ✅ Add Product Form */}
       <div className="p-4 mb-6 bg-gray-800 rounded shadow space-y-2">
         <h2 className="text-lg font-semibold text-gray-200">Add New Product</h2>
+
         <input
           type="text"
           list="existingProducts"
@@ -175,6 +179,7 @@ export default function ProductList() {
         </button>
       </div>
 
+      {/* 🔍 Search Form */}
       <div className="p-4 mb-6 bg-gray-800 rounded shadow space-y-2">
         <h2 className="text-lg font-semibold text-gray-200">Search Products</h2>
         <input
@@ -209,6 +214,7 @@ export default function ProductList() {
         </button>
       </div>
 
+      {/* ✅ Product Display + Transfer Controls */}
       {filteredProducts.map((product) => (
         <div key={product._id} className="p-4 bg-gray-800 shadow mb-4 rounded">
           <p className="text-gray-200">

@@ -39,22 +39,15 @@ export default function DemandManager() {
     mutate: mutateDemands,
     isLoading: loadingDemands,
     error: errorDemands,
-  } = useSWR<Demand[]>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/demands`,
-    fetcher,
-    {
-      refreshInterval: 10000,
-    }
-  );
+  } = useSWR<Demand[]>('http://localhost:5000/api/demands', fetcher, {
+    refreshInterval: 10000,
+  });
 
   const {
     data: products = [],
     isLoading: loadingProducts,
     error: errorProducts,
-  } = useSWR<Product[]>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products`,
-    fetcher
-  );
+  } = useSWR<Product[]>('http://localhost:5000/api/products', fetcher);
 
   const [form, setForm] = useState({
     productName: '',
@@ -73,10 +66,7 @@ export default function DemandManager() {
 
   const updateDemand = async (id: string, newLevel: number) => {
     try {
-      await axios.put(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/demands/${id}`,
-        { level: newLevel }
-      );
+      await axios.put(`http://localhost:5000/api/demands/${id}`, { level: newLevel });
       mutateDemands();
     } catch (err) {
       console.error('Failed to update demand', err);
@@ -91,7 +81,7 @@ export default function DemandManager() {
     }
 
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/demands`, {
+      await axios.post('http://localhost:5000/api/demands', {
         productId: matchedProduct._id,
         store: form.store,
         level: form.level,
@@ -125,6 +115,7 @@ export default function DemandManager() {
       <div className="p-4 bg-gray-800 rounded mb-6 border border-gray-600">
         <h2 className="text-lg font-semibold mb-2">Add Demand</h2>
         <div className="flex flex-col gap-2">
+          {/* 🔽 Searchable Product Dropdown */}
           <input
             type="text"
             list="product-list"
@@ -139,6 +130,7 @@ export default function DemandManager() {
             ))}
           </datalist>
 
+          {/* Store Dropdown */}
           <select
             value={form.store}
             onChange={(e) => setForm({ ...form, store: e.target.value })}
@@ -150,6 +142,7 @@ export default function DemandManager() {
             <option value="Store C">Store C</option>
           </select>
 
+          {/* Demand Level Dropdown */}
           <select
             value={form.level}
             onChange={(e) => setForm({ ...form, level: parseInt(e.target.value) })}
@@ -173,6 +166,7 @@ export default function DemandManager() {
       <div className="p-4 bg-gray-800 rounded mb-6 border border-gray-600">
         <h2 className="text-lg font-semibold mb-2">Search Existing Demands</h2>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
+          {/* Product Search with Datalist */}
           <div className="relative w-full">
             <input
               type="text"
@@ -189,6 +183,7 @@ export default function DemandManager() {
             </datalist>
           </div>
 
+          {/* Store Filter */}
           <select
             value={searchStore}
             onChange={(e) => setSearchStore(e.target.value)}
@@ -200,6 +195,7 @@ export default function DemandManager() {
             <option value="Store C">Store C</option>
           </select>
 
+          {/* Reset Button */}
           <button
             onClick={() => {
               setSearchTerm('');

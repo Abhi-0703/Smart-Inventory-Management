@@ -14,14 +14,11 @@ const UpdateProductForm = ({
     e.preventDefault();
 
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/products/${product._id}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ quantity }),
-        }
-      );
+      const res = await fetch(`http://localhost:5000/api/products/${product._id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ quantity }),
+      });
 
       if (res.ok) {
         onUpdated();

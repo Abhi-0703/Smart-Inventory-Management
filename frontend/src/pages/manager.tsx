@@ -30,19 +30,16 @@ export default function ManagerPanel() {
     error,
     isLoading,
     mutate,
-  } = useSWR<TransferRequest[]>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/transfers`,
-    fetcher,
-    {
-      refreshInterval: 10000,
-    }
-  );
+  } = useSWR<TransferRequest[]>('http://localhost:5000/api/transfers', fetcher, {
+    refreshInterval: 10000,
+  });
 
   const [searchProduct, setSearchProduct] = useState('');
   const [searchFrom, setSearchFrom] = useState('');
   const [searchTo, setSearchTo] = useState('');
   const [productOptions, setProductOptions] = useState<string[]>([]);
 
+  // 🔄 Extract unique product names for dropdown
   useEffect(() => {
     if (requests) {
       const uniqueNames = Array.from(new Set(requests.map(r => r.productId.name)));
@@ -52,10 +49,8 @@ export default function ManagerPanel() {
 
   const updateStatus = async (id: string, status: string) => {
     try {
-      await axios.put(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/transfers/${id}`, {
-        status,
-      });
-      mutate();
+      await axios.put(`http://localhost:5000/api/transfers/${id}`, { status });
+      mutate(); // Refresh after update
     } catch (err) {
       alert('Failed to update status');
       console.error(err);
@@ -70,6 +65,7 @@ export default function ManagerPanel() {
     return <p className="text-red-500 p-6">Failed to load transfer requests.</p>;
   }
 
+  // Filter requests based on search fields
   const filteredRequests = (requests ?? []).filter((req) => {
     const productMatch = req.productId.name.toLowerCase().includes(searchProduct.toLowerCase());
     const fromMatch = req.from.toLowerCase().includes(searchFrom.toLowerCase());

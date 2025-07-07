@@ -31,13 +31,9 @@ export default function RecommendationPage() {
     data,
     error,
     isLoading,
-  } = useSWR<RecommendationResponse>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/recommendations`,
-    fetcher,
-    {
-      refreshInterval: 10000,
-    }
-  );
+  } = useSWR<RecommendationResponse>('http://localhost:5000/api/recommendations', fetcher, {
+    refreshInterval: 10000,
+  });
 
   const [searchProduct, setSearchProduct] = useState('');
   const [searchFrom, setSearchFrom] = useState('');
@@ -169,4 +165,3 @@ Suggested Amount: ${rec.suggestedAmount}`}
     </div>
   );
 }
-/*code ends here*/
