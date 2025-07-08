@@ -13,7 +13,7 @@ export default function Home() {
         </Head>
         <main className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-6">
           <h1 className="text-4xl font-extrabold mb-4 text-center">
-            📦 Smart Inventory Redistribution System
+            📦 Smart Inventory Management System
           </h1>
           <p className="text-lg mb-8 text-center max-w-2xl">
             A smart solution to optimize inventory transfers between stores based on real-time stock and demand levels.
