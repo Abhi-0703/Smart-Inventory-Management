@@ -1,4 +1,5 @@
 # 📦 Smart Inventory Management System
+<img width="1366" height="598" alt="Image" src="https://github.com/user-attachments/assets/3b2d1e61-daea-4f5a-9479-de19a9490810" />
 
 A full-stack web application that enables efficient inventory redistribution among retail stores based on real-time stock and demand levels. This system minimizes wastage, optimizes stock transfers, and enhances the customer experience.
 
@@ -52,6 +53,11 @@ This Smart Inventory Management System helps:
 ✅ Smart alerts for low stock and demand mismatches  
 ✅ Searchable filters on every panel  
 ✅ Dark-themed modern UI with reusable components
+
+<img width="1366" height="597" alt="Image" src="https://github.com/user-attachments/assets/a2a63d2c-f862-450f-ad6e-84e75f2caa5f" />
+<img width="1366" height="602" alt="Image" src="https://github.com/user-attachments/assets/8fcf681f-687e-40f3-b82d-4d12d4ca075a" />
+<img width="1320" height="586" alt="Image" src="https://github.com/user-attachments/assets/adb5e680-6c0e-4d95-b408-75a2235036e0" />
+<img width="1366" height="587" alt="Image" src="https://github.com/user-attachments/assets/dea030aa-fdfc-4a69-906f-9894a1bc85fd" />
 
 > ⚙️ **Transfer Logic Thresholds:**
 - ✅ If stock is **greater than 200 units** and demand is **low**, the store becomes eligible to donate that item — but only the quantity **above 200**.
